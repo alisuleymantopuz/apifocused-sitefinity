@@ -1,0 +1,21 @@
+@using Telerik.Sitefinity.Frontend.Mvc.Helpers;
+@using Telerik.Sitefinity.Modules.Pages;
+@model SitefinityWebApp.MVC.Models.PageInfoViewModel
+
+@Html.Script(ScriptRef.JQuery, "top")
+
+<div id="page-Info" current-page-id="@Model.CurrentPageId" class="card">
+    <div class="card-body">
+        <h5 class="card-title" id="card-title"></h5>
+        <p class="card-text" id="card-text"></p>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $.get("/api/PageInfoApi/GetPageInfo?pageId=@Model.CurrentPageId", function (response) {
+            $("#card-title").text(response.Data.PageTitle);
+            $("#card-text").text(response.Data.PageDescription);
+            }, "json");
+    });
+</script>

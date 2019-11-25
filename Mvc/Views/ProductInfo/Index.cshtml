@@ -1,0 +1,26 @@
+@using Telerik.Sitefinity.Frontend.Mvc.Helpers;
+@using Telerik.Sitefinity.Modules.Pages;
+@model SitefinityWebApp.MVC.Models.ProductInfoViewModel
+
+@Html.Script(ScriptRef.JQuery, "top")
+
+
+<div id="product-Info" current-page-id="@Model.CurrentPageId" product-id="@Model.SelectedId" class="card">
+    <div class="card-body">
+        <h5 class="card-title" id="productTitle"></h5>
+        <p class="card-text" id="productText"></p>
+        <p class="card-text" id="productPrice"></p>
+        <img width="200" height="100" id="productImage" />
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $.get("/api/ProductInfoApi/GetProductInfo?productId=@Model.SelectedId", function (response) {
+            $("#productTitle").text(response.Data.Title);
+            $("#productImage").attr("src",response.Data.ImageUrl);
+            $("#productPrice").text(response.Data.Price);
+            $("#productText").html(response.Data.Description);
+        }, "json");
+    });
+</script>
